@@ -250,23 +250,22 @@ st.markdown(
   """
   <h3>How to use:</h3>
   
-  <li>Define path to save the xlsx file containing EDW plots.</li>
-  <li>Define file name. The file name should be in the format such as: file_name.xlsx </li>
-  <li>Upload CSV file for EDWs summary.</li><br><br>
+  <li>Upload CSV file for EDWs summary.</li>
+  <li>A "Download Excel File" button will appear. Click on this button to download excel file</li><br><br>
 
   <h3>Start auto-ploting EDWs</h3>
   """
 , unsafe_allow_html=True)
 
-# save_path0 = st.text_input('Step 1: Define path to save file', value="", max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None, disabled=False)
-# file_name = st.text_input('Step 2: Define file name', value="", max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None, disabled=False)
-# path1_output = f"{save_path0}\{file_name}"
+### save_path0 = st.text_input('Step 1: Define path to save file', value="", max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None, disabled=False)
+### file_name = st.text_input('Step 2: Define file name', value="", max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None, disabled=False)
+### path1_output = f"{save_path0}\{file_name}"
 
 uploaded_file = st.file_uploader('Step 3: Upload CSV file for EDWs Summary Data', type=None, accept_multiple_files=False, disabled=False)
 
 if uploaded_file is not None:
   df = read_EDWs_data_csv(uploaded_file)
-  # if (save_path0 is not None) & (file_name is not None):
+  ### if (save_path0 is not None) & (file_name is not None):
   output = BytesIO()
 
   alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
@@ -366,8 +365,8 @@ if uploaded_file is not None:
     mime="application/vnd.ms-excel"
   )
 
-  # else:
-  #   st.warning('Please define file path and file name.')
+  ### else:
+  ###   st.warning('Please define file path and file name.')
 
 else:
   st.warning('Please upload csv files.')
