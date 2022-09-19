@@ -4,6 +4,8 @@ import numpy as np
 import plotly.graph_objects as go
 import pandas as pd
 import xlsxwriter
+from io import BytesIO
+
 
 
 # with open('template/style.css') as f:
@@ -256,111 +258,116 @@ st.markdown(
   """
 , unsafe_allow_html=True)
 
-save_path0 = st.text_input('Step 1: Define path to save file', value="", max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None, disabled=False)
-file_name = st.text_input('Step 2: Define file name', value="", max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None, disabled=False)
-path1_output = f"{save_path0}\{file_name}"
+# save_path0 = st.text_input('Step 1: Define path to save file', value="", max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None, disabled=False)
+# file_name = st.text_input('Step 2: Define file name', value="", max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None, disabled=False)
+# path1_output = f"{save_path0}\{file_name}"
 
 uploaded_file = st.file_uploader('Step 3: Upload CSV file for EDWs Summary Data', type=None, accept_multiple_files=False, disabled=False)
 
 if uploaded_file is not None:
   df = read_EDWs_data_csv(uploaded_file)
-  if (save_path0 is not None) & (file_name is not None):
-    alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+  # if (save_path0 is not None) & (file_name is not None):
+  output = BytesIO()
 
-    workbook = xlsxwriter.Workbook(path1_output, {'strings_to_numbers': True})
-    ### write sheet1: DB for database
-    worksheet1 = workbook.add_worksheet('DB')
+  alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
-    for i, col_name in enumerate(df.columns):
-        worksheet1.write(0, i, col_name)
-        worksheet1.write_column(1, i, df[col_name])
+  workbook = xlsxwriter.Workbook(output, {'strings_to_numbers': True, 'in_memory': True})
+  ### write sheet1: DB for database
+  worksheet1 = workbook.add_worksheet('DB')
 
-    ##### sheet 2: main_plots for functions and plots
-    worksheet2 = workbook.add_worksheet('main_plots')
+  for i, col_name in enumerate(df.columns):
+      worksheet1.write(0, i, col_name)
+      worksheet1.write_column(1, i, df[col_name])
 
-    for i, col_name in enumerate(df.columns):
-        worksheet2.write(0, i, col_name)
-        worksheet2.write_column(1, i, df[col_name])
+  ##### sheet 2: main_plots for functions and plots
+  worksheet2 = workbook.add_worksheet('main_plots')
 
-    ### function for Max Amplitude column B
-    for i in range(8, df.shape[0]):
-        col_max_amp = '$C$'+str(i+1)
-        col_extr = '$B$'+str(i+1)
+  for i, col_name in enumerate(df.columns):
+      worksheet2.write(0, i, col_name)
+      worksheet2.write_column(1, i, df[col_name])
 
-        max_amp_func = '=MAX(' + col_extr +'*$E$'+str(i+1)+':'
+  ### function for Max Amplitude column B
+  for i in range(8, df.shape[0]):
+      col_max_amp = '$C$'+str(i+1)
+      col_extr = '$B$'+str(i+1)
 
-        j = df.shape[1]-1
-        n_alphabet = j//len(alphabet)
-        alphabeti = alphabet[j%len(alphabet)]
-        if n_alphabet==0:
-            end_col = '$'+ alphabeti + '&' + str(i+1)
-        else:
-            end_col = '$'+ alphabet[n_alphabet-1] + alphabeti + '$' + str(i+1)
+      max_amp_func = '=MAX(' + col_extr +'*$E$'+str(i+1)+':'
 
-        max_amp_func+= end_col + ')'
+      j = df.shape[1]-1
+      n_alphabet = j//len(alphabet)
+      alphabeti = alphabet[j%len(alphabet)]
+      if n_alphabet==0:
+          end_col = '$'+ alphabeti + '&' + str(i+1)
+      else:
+          end_col = '$'+ alphabet[n_alphabet-1] + alphabeti + '$' + str(i+1)
 
-        worksheet2.write_array_formula(col_max_amp, max_amp_func)
-        worksheet2.ignore_errors({'formula_range':col_max_amp})
+      max_amp_func+= end_col + ')'
 
-    ### Amp/Extr as a function of wave amplitude
-    for j in range(3, df.shape[1]):
-        n_alphabet = j//len(alphabet)
-        alphabeti = alphabet[j%len(alphabet)]
-        if n_alphabet==0:
-            col0 = alphabeti
-        else:
-            col0 = alphabet[n_alphabet-1] + alphabeti
+      worksheet2.write_array_formula(col_max_amp, max_amp_func)
+      worksheet2.ignore_errors({'formula_range':col_max_amp})
 
-        for i in range(8, df.shape[0]):
-            coli = col0+str(i+1)
-            func = '=DB!$' + col0 + '$'+ str(i+1)+'/DB!$'+col0+'$6*main_plots!$'+col0+'$6'
-            worksheet2.write_array_formula(coli, func)
+  ### Amp/Extr as a function of wave amplitude
+  for j in range(3, df.shape[1]):
+      n_alphabet = j//len(alphabet)
+      alphabeti = alphabet[j%len(alphabet)]
+      if n_alphabet==0:
+          col0 = alphabeti
+      else:
+          col0 = alphabet[n_alphabet-1] + alphabeti
 
-    ### Create graphs
-    ### torion chart
-    chart_loc = plot_envelop0('TOR', 'F9', 20, worksheet2)
+      for i in range(8, df.shape[0]):
+          coli = col0+str(i+1)
+          func = '=DB!$' + col0 + '$'+ str(i+1)+'/DB!$'+col0+'$6*main_plots!$'+col0+'$6'
+          worksheet2.write_array_formula(coli, func)
 
-    ### VBM chart
-    chart_loc = plot_envelop0('VBM', chart_loc, 20, worksheet2)
+  ### Create graphs
+  ### torion chart
+  chart_loc = plot_envelop0('TOR', 'F9', 20, worksheet2)
 
-    ### HBM chart
-    chart_loc = plot_envelop0('HBM', chart_loc, 20, worksheet2)
+  ### VBM chart
+  chart_loc = plot_envelop0('VBM', chart_loc, 20, worksheet2)
 
-    # ### HSF chart
-    chart_loc = plot_envelop0('HSF', chart_loc, 20, worksheet2)
+  ### HBM chart
+  chart_loc = plot_envelop0('HBM', chart_loc, 20, worksheet2)
 
-    # ### VSF chart
-    chart_loc = plot_envelop0('VSF', chart_loc, 20, worksheet2)
+  # ### HSF chart
+  chart_loc = plot_envelop0('HSF', chart_loc, 20, worksheet2)
 
-    #### Ver_Ac_xxL_xxB_vcg
-    y_loc_list = [0.0, 0.25, 0.50]
-    chart_loc =  plot_envelop_Ver_Ac(y_loc_list, 'vcg', chart_loc, worksheet2)
-    #### Ver_Ac_xxL_xxB_deck
-    chart_loc =  plot_envelop_Ver_Ac(y_loc_list, 'deck', chart_loc, worksheet2)
+  # ### VSF chart
+  chart_loc = plot_envelop0('VSF', chart_loc, 20, worksheet2)
 
-    #### Lon_Ac_xxB_xxD
-    y_loc_list = [0.00, 0.25, 0.50]
-    z_loc_list = [0.00, 0.25, 0.50, 0.75, 1.00]
-    chart_loc = plot_envelop_Lon_Ac(y_loc_list, z_loc_list, chart_loc, worksheet2)  
+  #### Ver_Ac_xxL_xxB_vcg
+  y_loc_list = [0.0, 0.25, 0.50]
+  chart_loc =  plot_envelop_Ver_Ac(y_loc_list, 'vcg', chart_loc, worksheet2)
+  #### Ver_Ac_xxL_xxB_deck
+  chart_loc =  plot_envelop_Ver_Ac(y_loc_list, 'deck', chart_loc, worksheet2)
 
-    #### Tran_Ac_xxL_xxD
-    z_loc_list = [0.00, 0.25, 0.50, 0.75, 1.00]
-    chart_loc = plot_envelop_Tran_Ac(z_loc_list, chart_loc, worksheet2)
+  #### Lon_Ac_xxB_xxD
+  y_loc_list = [0.00, 0.25, 0.50]
+  z_loc_list = [0.00, 0.25, 0.50, 0.75, 1.00]
+  chart_loc = plot_envelop_Lon_Ac(y_loc_list, z_loc_list, chart_loc, worksheet2)  
 
-    ### Bilge pressure chart
-    chart_loc = plot_envelop0('Bilge', chart_loc, 10, worksheet2)
+  #### Tran_Ac_xxL_xxD
+  z_loc_list = [0.00, 0.25, 0.50, 0.75, 1.00]
+  chart_loc = plot_envelop_Tran_Ac(z_loc_list, chart_loc, worksheet2)
 
-    ### Bottom pressure chart
-    chart_loc = plot_envelop0('Bottom', chart_loc, 10, worksheet2)
+  ### Bilge pressure chart
+  chart_loc = plot_envelop0('Bilge', chart_loc, 10, worksheet2)
 
-    workbook.close()
+  ### Bottom pressure chart
+  chart_loc = plot_envelop0('Bottom', chart_loc, 10, worksheet2)
 
-    statement = 'A '+ file_name + ' was generated on your local computer in following path:'
-    st.write(statement)
-    st.write(path1_output)
+  workbook.close()
 
-  else:
-    st.warning('Please define file path and file name.')
+  st.download_button(
+    label="Download Excel File",
+    data=output.getvalue(),
+    file_name="EDW_plot.xlsx",
+    mime="application/vnd.ms-excel"
+  )
+
+  # else:
+  #   st.warning('Please define file path and file name.')
 
 else:
   st.warning('Please upload csv files.')
