@@ -1,0 +1,290 @@
+:root {
+  --color-background-primary: rgba(241, 222, 222, 0.959);
+
+  --color-logo: rgb(32, 104, 43);
+  --color-logo-text-shadow0: #000;
+  --color-logo-text-shadow1: rgb(151, 151, 241);
+  --color-logo-text-shadow2: rgb(104, 104, 236);
+
+  --color-h1: rgb(18, 5, 77);
+  --color-h1-text-shadow0: rgb(196, 142, 228);
+  --color-h1-text-shadow1: rgb(213, 151, 241);
+  --color-h1-text-shadow2: rgb(166, 104, 236);
+  
+
+  --color-breadcrumb: rgba(196, 196, 216, 0.938);
+  --color-breadcrumb-item-a-text-shadow0: black;
+  --color-breadcrumb-item-a-text-shadow1: rgb(151, 151, 241);
+  --color-breadcrumb-item-a-text-shadow2: rgb(104, 104, 236);
+  
+  --color-breadcrumb-item-active: #098605;
+  --color-breadcrumb-item-a-text-shadow0: #1e4d1c;
+  --color-breadcrumb-item-a-text-shadow1: rgb(94, 203, 218);
+  --color-breadcrumb-item-a-text-shadow2: rgb(94, 203, 218);
+
+  --color-table-boder: #828c9b;
+  --color-table-th-td: rgb(248, 249, 252);
+
+  --color-base1: white;
+  --color-base2: #000;
+  --color-border-hover: #f15785;
+  --color-box-shadow-hover: rgba(0, 0, 0, 0.32);
+
+  --color-block-container: rgba(196, 196, 216, 0.938);
+
+  --color-p-hover: #d6f7d8;
+}
+
+
+
+/*  format Logo*/
+#Logo {
+  margin: 0px;
+  top: 0px;
+  padding-bottom: 8%;
+  width: 100%;
+  height: 50px;
+  font-size: 60px;
+  font-weight: bold;
+  font-family: Tahoma, Verdana, Helvetica, Arial, Courier;
+  color: var(--color-logo);
+  text-shadow: 1px 1px 2px var(--color-logo-text-shadow0), 0 0 25px var(--color-logo-text-shadow1), 0 0 5px var(--color-logo-text-shadow2);
+}
+/* 
+h1 {
+  margin: 0px;
+  padding-bottom: 5%;
+  width: 100%;
+  height: 70px;
+  font-size: 45px;
+  font-weight: bold;
+  font-family: Tahoma, Verdana, Helvetica, Arial, Courier;
+  color: var(--color-h1);
+  text-shadow: 1px 1px 2px var(--color-h1-text-shadow0), 0 0 25px var(--color-h1-text-shadow1), 0 0 5px var(--color-h1-text-shadow2);
+}
+
+
+h2 {
+  font-size: 35px;
+  font-weight: bold;
+}
+
+h3 {
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+} */
+
+
+
+#MainMenu {
+  visibility: hidden;
+}
+
+footer {
+  visibility: hidden;
+}
+
+.block-container {
+  padding-top: 2rem;
+}
+
+/*Format navigation bar*/
+.nav-item {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.breadcrumb{
+  background-color: var(--color-breadcrumb);
+  border: none;
+}
+
+.breadcrumb-item a {
+  margin-left: 0.2rem !important;
+  font-size: 60px;
+  padding-right: 0%;
+  text-shadow: 1px 1px 2px var(--color-breadcrumb-item-a-text-shadow0), 0 0 25px var(--color-breadcrumb-item-a-text-shadow1), 0 0 5px var(--color-breadcrumb-item-a-text-shadow2);
+}
+
+.breadcrumb-item.active {
+  color: var(--color-breadcrumb-item-active);
+  font-size: 60px;
+  margin-left: 0rem;
+  text-shadow: 1px 1px 2px var(--color-breadcrumb-item-a-text-shadow0), 0 0 25px var(--color-breadcrumb-item-a-text-shadow1), 0 0 5px var(--color-breadcrumb-item-a-text-shadow2);
+}
+
+
+
+/* format table*/
+.table-striped {
+  border: 1px solid var(--color-table-boder);
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: var(--color-table-th-td);
+}
+
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+  background-color: var(--color-background-primary);
+  font-weight: bold;
+  /* transform: translateY(-2px); */
+}
+
+.css-165ax5l.edw49t13 tbody tr:hover {
+  background-color: var(--color-background-primary);
+  font-weight: bold;
+  transform: translateY(-2px); 
+}
+tr:hover {
+  background-color: var(--color-background-primary);
+  font-weight: bold;
+  transform: translateY(-2px);
+}
+
+.edw49t11 {
+  font-weight: bold;
+  color: var(--color-base2);
+}
+
+
+.e1tzin5v2 {
+  background-color: var(--color-base1);
+  font: 15px;
+  border: 2px solid var(--color-base1);
+  padding: 2% 2% 2% 2%;
+  border-radius: 10px;
+}
+
+.e1tzin5v2:hover {
+  cursor: default;
+  font-weight: bold;
+  transform: translateY(-5px);
+  border: 1px solid var(--color-border-hover);
+  box-shadow: 1px 4px 15px var(--color-box-shadow-hover);
+}
+
+
+.e16fv1kl2 {
+  font-family: Helvetica, Arial, Courier;
+  font-size: 13px;
+}
+
+.eyqtai90,
+.e1tzin5v3 {
+  font-family: Helvetica, Arial, Courier;
+  font-size: 16px;
+}
+
+.e16fv1kl1 {
+  font-family: Helvetica, Arial, Courier;
+  font-size: 18px;
+}
+
+.block-container {
+  padding-top: 2rem;
+  background-color: var(--color-block-container);
+  max-width: 100%;  
+  height: auto;
+}
+
+.st-b7 {
+  background-color: var(--color-base1);
+  border-radius: 2px;
+}
+
+.main-svg {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  pointer-events: none;
+  object-fit: cover;
+  /* max-width: 100%;
+  height: auto; */
+}
+
+.stPlotlyChart.js-plotly-plot {
+  object-fit: cover;
+}
+
+
+.svg-container,
+.appview-container {
+  max-width: 100%;  
+  height: auto; 
+}
+
+
+.e1tzin5v4 {
+  /* background-color: var(--color-background-primary); */
+  border: none;
+  font-size: 12px;
+}
+
+.css-1r6slb0.e1tzin5v2,
+.css-4uwpl2.e1tzin5v0,
+.css-175o9lw.e1tzin5v0,
+.css-2cq41o.e1tzin5v3 {
+  background-color: var(--color-base1);
+  padding: 2% 2% 2% 2%;
+  border-radius: 5px;
+}
+
+.css-1r6slb0.e1tzin5v2:hover,
+.css-4uwpl2.e1tzin5v0:hover,
+.css-175o9lw.e1tzin5v0:hover,
+.css-2cq41o.e1tzin5v3:hover {
+  transform: translateY(-5px);
+  background-color: var(--color-base1);
+  border: 1px solid var(--color-border-hover);
+  box-shadow: 1px 4px 15px var(--color-box-shadow-hover);
+  padding: 2% 2% 2% 2%;
+  border-radius: 5px;
+}
+  
+  
+.stPlotlyChart.js-plotly-plot {
+  background-color: var(--color-base1);
+  border-radius: 5px;
+}
+
+
+p {
+  text-align: justify;
+  background-color: var(--color-base1);
+  border: 2px solid var(--color-base1);
+  border-radius: 5px;
+  padding: 2% 2% 2% 2%;
+}
+p:hover {
+  text-align: justify;
+  background-color: var(--color-p-hover);
+  border: 2px solid var(--color-border-hover);
+  border-radius: 5px;
+  padding: 2% 2% 2% 2%;
+}
+
+ul {
+  text-align: justify;
+  background-color: var(--color-base1);
+  border: 2px solid var(--color-base1);
+  border-radius: 5px;
+  padding: 2% 2% 2% 2%;
+}
+ul:hover {
+  text-align: justify;
+  background-color: var(--color-p-hover);
+  border: 2px solid var(--color-border-hover);
+  border-radius: 5px;
+  padding: 2% 2% 2% 2%;
+}
+
+/* format coin icon */
+.coin-icon {
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  margin-right: 5px;
+}
