@@ -17,7 +17,7 @@ def read_EDWs_data_csv(path1_input):
     for i in range(1, df.shape[0]):
         for j in range(1, df.shape[1]):
             if df.iloc[i,j].isnumeric()==True:
-                df.iloc[i,j] = df.iloc[i,j].astype(float)
+                df.iloc[i,j] = float(df.iloc[i,j])
 
     df1 = df.iloc[:,:3]
     df2 = df.iloc[:,4:]
